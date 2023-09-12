@@ -1,0 +1,149 @@
+#include <iostream>
+
+using namespace std;
+
+class Materia
+{
+private:
+    int Clave;
+    string Nombre;
+    string Profesor;
+    string LibroTexto;
+public:
+    Materia()
+    {
+        Clave = 0;
+        Nombre = " ";
+        Profesor = " ";
+        LibroTexto = " ";
+    }
+    Materia ( int Clv,string N, string P,string L)
+    {
+        Clave = Clv;
+        Nombre = N;
+        Profesor = P;
+        LibroTexto = L;
+
+    }
+    void Imprime()
+    {
+        cout << "\nClave de la Materia: " <<Clave<<endl;
+        cout << "Nombre de la Materia: " << Nombre<<endl;
+        cout << "Nombre del Profesor: " << Profesor<<endl;
+        cout << "Libro de Texto: " << LibroTexto << endl;
+    }
+
+
+
+        // ==
+    bool operator ==(Materia& m1)
+    {
+        return (Clave==m1.Clave);
+    }
+
+
+    void ImprimeClv(){
+        cout <<Clave;
+    }
+    void CambiarClve(int clv)
+    {
+        Clave = clv;
+    }
+    void CambiarProfesor(string Prf)
+    {
+        Profesor = Prf;
+    }
+
+    //<<
+    friend ostream& operator <<(ostream& o, Materia& M)
+    {
+        o<<"\nClave: "<<M.Clave;
+        o<<"\nNombre: "<<M.Nombre;
+        o<<"\nProfesor: "<<M.Profesor;
+        o<<"\nLibro de Texto: "<<M.LibroTexto;
+        return o;
+
+    }
+
+
+
+    //  >>
+    friend istream& operator >> (istream& a, Materia& M){
+        cout << "Ingresa la nueva clave\n:";
+        a>>M.Clave;
+
+
+    }
+
+
+
+};
+
+
+
+
+
+int main()
+{
+    Materia Programacion(1526,"Sem. Estructura de datos","Juan","Estructura de datos en C++"), BasesDatos(4596,"Estructura de datos","Pedro","Estructura de datos y POO"),i;
+    int opc =0;
+    char opc2;
+    int NuevaClv;
+    string NuevoPrf;
+    do
+    {
+        cout <<"\nElige una opcion."<<endl;
+        cout <<"1.- Cambiar la clave de la Materia."<<endl;
+        cout <<"2.- Cambiar el nombre del maestro que imparte la materia Bases de Datos."<<endl;
+        cout <<"3.- Imprimir todos los datos de la materia Bases de Datos."<<endl;
+        cout<<">>";
+        cin>> opc;
+        switch(opc)
+        {
+        case 1:
+            cout<<"\nIngresa la clave de la materia: ";
+            cin >>NuevaClv;
+            i.CambiarClve(NuevaClv);
+            if(i == BasesDatos)
+            {
+                cout<<"Base de Datos\n";
+                cin>>BasesDatos;
+            }
+
+
+             cout<<"\nIngresa la clave de la materia: ";
+            cin >>NuevaClv;
+            i.CambiarClve(NuevaClv);
+            if(i == Programacion)
+            {
+                cout<<"Programacion\n";
+                cin>>Programacion;
+            }
+
+
+            break;
+        case 2:
+            cout<<"Quieres cambiar el nombre del profesor de la materia Base de datos"<<endl; cin>>opc2;
+            if(opc2 == 'S'||opc2 =='s'){
+                cout<<"Da el nuevo Nombre del profesor: "; cin>>NuevoPrf; BasesDatos.CambiarProfesor(NuevoPrf);
+            }
+
+            cout<<"Quieres cambiar el nombre del profesor de la materia Programacion"<<endl; cin>>opc2;
+            if(opc2 == 'S'||opc2 =='s'){
+                cout<<"Da el nuevo Nombre del profesor: "; cin>>NuevoPrf; Programacion.CambiarProfesor(NuevoPrf);
+            }
+
+
+
+            break;
+        case 3:
+            cout<<BasesDatos;
+            cout<<endl;
+            cout<<Programacion;
+            cout<<endl;
+            break;
+        }
+    }while(opc!=4);
+    return 0;
+}
+
