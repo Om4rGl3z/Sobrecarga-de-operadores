@@ -1,0 +1,216 @@
+#include <iostream>
+
+
+using namespace std;
+
+class Empleado
+{
+private:
+    int ClaveEmpleado;
+    string Nombre;
+    string Domicilio;
+    int Sueldo;
+    string ReportaA;
+
+public:
+    Empleado() {}
+    Empleado(int ClvEmp,string N,string D, int S, string RptA): ClaveEmpleado(ClvEmp), Nombre(N),Domicilio(D),Sueldo(S),ReportaA(RptA) {}
+
+    void Imprime()
+    {
+        cout<<"Clave de Empleado: "<<ClaveEmpleado<<endl;
+        cout<<"Nombre: "<<Nombre<<endl;
+        cout<<"Domicilio: "<<Domicilio<<endl;
+        cout<<"Sueldo: "<<Sueldo<<endl;
+        cout<<"Reporta ante: "<<ReportaA<<endl;
+    }
+    void CambiaDomic(string NuevoDom)
+    {
+        Domicilio = NuevoDom;
+    }
+    void CambiaReportaA(string NueRpt)
+    {
+        ReportaA = NueRpt;
+    }
+    void ActualizarSueldo(int NueSld)
+    {
+        Sueldo = NueSld;
+    }
+    void CambiarClave(int NuevaClave)
+    {
+        ClaveEmpleado = NuevaClave;
+    }
+
+
+    // ==
+    bool operator ==(Empleado& e1)
+    {
+        return (ClaveEmpleado==e1.ClaveEmpleado);
+    }
+
+
+
+
+    // <<  Va estar dentro de Imprime
+    friend ostream& operator <<(ostream& o, Empleado& E)
+    {
+        o<<"\nClave: "<<E.ClaveEmpleado;
+        o<<"\nNombre: "<<E.Nombre;
+        o<<"\nDomicilio: "<<E.Domicilio;
+        o<<"\nSueldo: "<<E.Sueldo;
+        o<<"\nSe reporta ante: "<<E.ReportaA;
+        return o;
+
+    }
+
+
+    // >>, Va a estar dentro de cambia
+    friend istream& operator >>(istream& a,Empleado& e)
+    {
+        cout<<"Ingrese nuevo Domicilio";
+        a>>e.Domicilio;
+
+        return a;
+    }
+
+     //  + ocupa friend porque manipula los datos privados
+    friend Empleado operator + (Empleado& E1, Empleado& E2){
+       return Empleado(0, "", "", E1.Sueldo + E2.Sueldo, "");
+
+    }
+
+
+friend bool operator<(const Empleado& em1, const Empleado& em2){
+    return (em1.Sueldo < em2.Sueldo);
+}
+
+friend bool operator>(const Empleado& em1, const Empleado& em2){
+    return (em1.Sueldo > em2.Sueldo);
+}
+
+friend bool operator!=(const Empleado& em1, const Empleado& em2){
+    return (em1.Nombre != em2.Nombre);
+}
+
+
+};
+
+
+
+int main()
+{
+    Empleado JefePlanta(15,"Omar","Rio Jalisco",4500,"Edson"), JefePersonal(30,"Isaac","Rio Hidalgo",4600,"Salma"),i;
+    // i Es un objeto para usar el codigo o buscar
+    int opc=0;
+    int NuevoSueldo=0;
+    int ClaveNue=0;
+    string NuevoReporta;
+    JefePersonal.Imprime();
+    cout<<endl;
+    JefePlanta.Imprime();
+    do
+    {
+        cout<<"\n1.Cambiar domicilio.\n";
+        cout<<"2.Actualizar sueldo\n";
+        cout<<"3.Imprimir datos de empleado\n";
+        cout<<"4.Cambiar nombre de persona a quien reporta\n: ";
+        cin>>opc;
+        switch(opc)
+        {
+        case 1:
+            cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePersonal)
+            {
+                cout<<"Jefe de Personal\n";
+                cin>>JefePersonal;
+            }
+
+            cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePlanta)
+            {
+                cout<<"Jefe de Planta\n";
+                cin>>JefePlanta;
+            }else{
+                cout<<"Empleado no localizado\n";
+            }
+
+            break;
+        case 2:
+            cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePersonal)
+            {
+                cout<<"Jefe de Personal\n";
+                cout<<"Da el sueldo:";
+                cin>>NuevoSueldo;
+                JefePersonal.ActualizarSueldo(NuevoSueldo);
+            }
+
+            cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePlanta)
+            {
+                cout<<"Jefe de Planta\n";
+                cout<<"Da el sueldo:";
+                cin>>NuevoSueldo;
+                JefePlanta.ActualizarSueldo(NuevoSueldo);
+            }
+            break;
+        case 3:
+            cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePersonal)
+            {
+                cout<<JefePersonal;
+            }
+
+             cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePlanta)
+            {
+                cout<<JefePlanta;
+            }
+            break;
+        case 4:
+            cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePersonal)
+            {
+                cout<<"Ingresa el nombre para el reporta";
+                cin>>NuevoReporta;
+                JefePersonal.CambiaReportaA(NuevoReporta);
+            }
+
+            cout<<"\nIngresa la clave del empleado: ";
+            cin >>ClaveNue;
+            i.CambiarClave(ClaveNue);
+            if(i == JefePlanta)
+            {
+                cout<<"Ingresa el nombre para el reporta";
+                cin>>NuevoReporta;
+                JefePlanta.CambiaReportaA(NuevoReporta);
+            }
+
+
+            break;
+
+
+
+        }
+
+
+
+    }
+    while(opc !=5);
+
+    return 0;
+}
